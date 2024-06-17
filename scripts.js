@@ -9,3 +9,14 @@ function getComputerChoice() {
             return "scissors";
     }
 }
+
+function getHumanChoice() {
+    const valid = ["rock", "paper", "scissors"];
+    let choice = "";
+    while (!valid.includes(choice)) {
+        choice = prompt("Choose Rock, Paper, or Scissors").toLowerCase();
+    }
+    return choice;
+}
+
+console.log(getHumanChoice());
