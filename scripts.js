@@ -21,27 +21,45 @@ function getHumanChoice() {
 
 let humanScore = 0;
 let computerScore = 0;
+
+
 let playRound = function (humanChoice, computerChoice) {
+    resultText = document.querySelector('#result');
     if (humanChoice == computerChoice) {
-        console.log(`Tie! Both players chose ${humanChoice}.`)
+        resultText.textContent = `Tie! Both players chose ${humanChoice}.`;
         return;
     }
     const options = ["rock", "paper", "scissors"];
     let humanValue = options.indexOf(humanChoice);
     let computerValue = options.indexOf(computerChoice);
     if (computerValue == humanValue + 1 % 3) {
-        console.log(`You lose! ${computerChoice} beats ${humanChoice}.`);
+        resultText.textContent = `You lose! ${computerChoice} beats ${humanChoice}.`;
         computerScore++;
+        document.querySelector('#computer-score').textContent = computerScore;
     } else {
-        console.log(`You win! ${humanChoice} beats ${computerChoice}`);
+        resultText.textContent = `You win! ${humanChoice} beats ${computerChoice}`;
         humanScore++;
+        document.querySelector('#human-score').textContent = humanScore;
     }
+}
+
+let updateGame = function(humanChoice) {
+    if(humanScore >=5 || computerScore >= 5) {
+        humanScore = 0;
+        computerScore = 0;
+        document.querySelector('#human-score').textContent = humanScore;
+        document.querySelector('#computer-score').textContent = computerScore;
+    }  
+    playRound(humanChoice, getComputerChoice());
+    resultText = document.querySelector('#result');
+    if (humanScore >= 5) resultText.textContent = "YOU WIN IT ALL";
+    if (computerScore >= 5) resultText.textContent = "THE COMPUTER WINS";
 }
 
 const buttons = document.querySelectorAll('button');
 
 buttons.forEach((button) => {
     button.addEventListener("click", function (e) {
-        playRound(e.target.textContent.toLowerCase(), getComputerChoice());
+        updateGame(e.target.textContent.toLowerCase())
     })
 })
